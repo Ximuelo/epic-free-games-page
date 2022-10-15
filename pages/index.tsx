@@ -11,9 +11,13 @@ const Home: NextPage = () => {
   const [games, setGames] = useState<OfferGame[]>([]);
 
   const getCurrentGames = async () => {
-    const currentGames = await fetch("https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions?country=ES");
-    const currentGamesJson = await currentGames.json();
-    setGames(currentGamesJson);
+    // const currentGames = await fetch("https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions?country=ES", {
+    //   mode: "cors",
+    // });
+    const currentGames = await getGames("US", true);
+    // console.log(currentGames);
+    // const currentGamesJson = await currentGames.json();
+    setGames(currentGames.currentGames);
   };
 
   useEffect(() => {
