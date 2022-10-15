@@ -8,7 +8,7 @@ const Home: NextPage = () => {
   const countries = ["US", "TR", "GB", "DE", "AR", "ES", "MX", "FR", "IT", "JP", "KR", "PL", "BR", "RU", "TH", "CN"];
 
   const [selected, setSelected] = useState<Country>(countries[0] as Country);
-  const [games, setGames] = useState();
+  const [games, setGames] = useState<OfferGame[]>([]);
 
   const getCurrentGames = async () => {
     const currentGames = await fetch("https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions?country=ES");
@@ -25,7 +25,7 @@ const Home: NextPage = () => {
 
   return (
     <div className="bg-gradient-to-r from-amber-300 to-orange-500 w-screen h-screen flex justify-center">
-      {games.map((game, index) => {
+      {games.map((game: OfferGame, index) => {
         return <h1 key={index}>{game.title}</h1>;
       })}
       <div className="fixed top-16 w-72">
