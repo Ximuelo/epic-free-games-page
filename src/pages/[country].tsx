@@ -1,10 +1,7 @@
 import type { NextPage } from "next";
-import { Fragment, useEffect, useState } from "react";
+import { useState } from "react";
 import { getGames, Country, OfferGame } from "epic-free-games";
-import { Listbox, Transition } from "@headlessui/react";
-import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { useRouter } from "next/router";
-import Image from "next/image";
 import { Selector } from "../components/Selector";
 import { Card } from "../components/Card";
 import Head from "next/head";
@@ -46,7 +43,8 @@ const CountryGames: NextPage<Props> = (props) => {
 };
 
 export async function getServerSideProps(context: any) {
-  const { country } = context.params;
+  let { country } = context.params;
+  country = country.toUpperCase();
 
   const games = await getGames(country, true);
   const currentGames = games["currentGames"];
