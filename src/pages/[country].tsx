@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import { useState } from "react";
-import { getGames, Country, OfferGame } from "epic-free-games";
+import { EpicFreeGames, Country, OfferGame } from "epic-free-games";
 import { useRouter } from "next/router";
 import { Selector } from "../components/Selector";
 import { Card } from "../components/Card";
@@ -46,7 +46,9 @@ export async function getServerSideProps(context: any) {
   let { country } = context.params;
   country = country.toUpperCase();
 
-  const games = await getGames(country, true);
+  const epicFreeGames = new EpicFreeGames({ country: country, includeAll: true })
+
+  const games = await epicFreeGames.getGames(country);
   const currentGames = games["currentGames"];
   const nextGames = games["nextGames"];
   return {
