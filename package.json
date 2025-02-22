@@ -8,6 +8,7 @@
 	},
 	"dependencies": {
 		"@tailwindcss/vite": "^4.0.6",
+		"epic-free-games": "^4.0.2",
 		"preact": "^10.25.3",
 		"preact-iso": "^2.9.0",
 		"tailwindcss": "^4.0.6"
