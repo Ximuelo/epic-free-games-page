@@ -1,0 +1,20 @@
+---
+const colorVariants = {
+    green: "bg-green-200 text-green-600 border border-green-300 py-1 px-3 rounded-full text-xs", 
+    gray: "bg-gray-200 text-gray-600 border border-gray-300 py-1 px-3 rounded-full text-xs", 
+    yellow: "bg-yellow-200 text-yellow-600 border border-yellow-300 py-1 px-3 rounded-full text-xs", 
+    orange: "bg-orange-200 text-orange-600 border border-orange-300 py-1 px-3 rounded-full text-xs", 
+}
+
+interface Props {
+    color: keyof typeof colorVariants;
+    text: string;
+}
+
+const { color, text } = Astro.props;
+---
+
+<span class={colorVariants[color]}>
+    {text}
+</span>
+

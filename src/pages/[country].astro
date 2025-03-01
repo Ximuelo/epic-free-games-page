@@ -1,0 +1,26 @@
+---
+import { EpicFreeGames, type Country} from "epic-free-games";
+import type { GetGamesOutput } from "epic-free-games/dist/modules/epic-free-games/types";
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
+import Card from "../components/Card.astro";
+
+const { country } = Astro.params;
+const pathCountry: Country = country?.split("/")[1] as Country || "US";
+
+const epicFreeGames = new EpicFreeGames({ country: pathCountry});
+let freeGames: GetGamesOutput = await epicFreeGames.getGames();
+---
+
+<Layout>
+    <Hero />
+    <div class="p-8 flex sm:flex-row flex-col sm:space-x-8 space-y-8 sm:space-y-0 justify-center items-center">
+        {freeGames.currentGames.map((freeGame) =>
+            <Card freeGame={freeGame} currentGame={true} />
+        )}
+        {freeGames.nextGames.map((freeGame) =>
+            <Card freeGame={freeGame} currentGame={false} />
+        )}
+    </div>
+
+</Layout>

@@ -1,0 +1,46 @@
+---
+import type { OfferGame } from 'epic-free-games';
+import Image from 'astro/components/Image.astro';
+import Badge from './Badge.astro';
+
+interface Props {
+    freeGame: OfferGame;
+    currentGame: boolean; 
+}
+
+const { freeGame, currentGame } = Astro.props as Props;
+
+function daysLeftOrRemaining() {
+    const oneDay: number = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+    const firstDate: Date = new Date();
+    let secondDate: Date = new Date();
+
+    if (currentGame) 
+        secondDate = new Date(freeGame.promotions.promotionalOffers[0].promotionalOffers[0].endDate);
+    else
+        secondDate = new Date(freeGame.promotions.upcomingPromotionalOffers[0].promotionalOffers[0].startDate);
+
+    return Math.round(Math.abs((+firstDate - +secondDate) / oneDay));
+};
+---
+
+<a class="group w-56 sm:w-72 p-2 rounded-xl bg-gray-800 border border-gray-700 overflow-hidden" href={`https://store.epicgames.com/en-US/p/${freeGame.urlSlug}`} target="_blank">
+    <div class="relative w-full h-60 sm:h-80 overflow-hidden">
+        <Image src={freeGame.keyImages[0].url} class="w-full h-full rounded-lg object-cover transition-transform duration-300 ease-in-out group-hover:scale-110" alt="Free Game Image" inferSize />
+    </div>
+    <p class="my-4 w-full text-white text-center text-xl sm:text-2xl font-bold">{freeGame.title}</p>
+    <div class="my-2 w-full flex flex-row space-x-12 justify-between">
+        {currentGame ? 
+            <>
+                <Badge text="Active" color="green" />
+                <Badge text={daysLeftOrRemaining() + ' days left'} color="gray" />
+            </>
+        : 
+            <>
+                <Badge text="Coming Soon" color="yellow" />
+                <Badge text={'Available in ' + daysLeftOrRemaining() + ' days'} color="orange" />
+            </>
+        }
+    </div>
+</a>
+
