@@ -8,9 +8,8 @@ import cloudflare from '@astrojs/cloudflare';
 export default defineConfig({
   // Activate SSR
   output: "server",
-
+  adapter: cloudflare(),
   vite: {
       plugins: [tailwindcss()], 
   },
-    adapter: cloudflare(),
 });
